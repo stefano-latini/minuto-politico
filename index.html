@@ -57,6 +57,7 @@ html{
   overflow-x:hidden;
   width:100%;
   max-width:100%;
+  touch-action:pan-y;
 }
 body{
   background:var(--bg);color:var(--txt);
@@ -66,6 +67,7 @@ body{
   width:100%;
   max-width:100%;
   position:relative;
+  touch-action:pan-y;
 }
 /* Wrapper principale — isola overflow senza conflitti con sticky */
 #page-wrap{
@@ -952,6 +954,28 @@ function getCache(){
     return(!d||Date.now()-d.ts>CACHE_TTL)?null:d;
   }catch{return null;}
 }
+</script>
+<script>
+/* Blocca scroll orizzontale su iOS Safari */
+(function(){
+  var startX, startY;
+  document.addEventListener('touchstart', function(e){
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+  }, {passive: true});
+  document.addEventListener('touchmove', function(e){
+    if(!e.cancelable) return;
+    // Lascia scorrere orizzontalmente solo dentro .tabs
+    var el = e.target;
+    while(el && el !== document.body){
+      if(el.classList && el.classList.contains('tabs')) return;
+      el = el.parentElement;
+    }
+    var dx = Math.abs(e.touches[0].clientX - startX);
+    var dy = Math.abs(e.touches[0].clientY - startY);
+    if(dx > dy) e.preventDefault();
+  }, {passive: false});
+})();
 </script>
 </body>
 </html>
