@@ -53,12 +53,21 @@
 ═══════════════════════════════ */
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;overflow-x:clip;width:100%}
+/* Wrapper principale — blocca qualsiasi overflow orizzontale */
+#page-wrap{
+  width:100%;
+  max-width:100%;
+  overflow-x:hidden;
+  overflow-x:clip;
+  position:relative;
+}
 body{
   background:var(--bg);color:var(--txt);
   font-family:var(--serif);line-height:1.6;min-height:100vh;
   transition:background .25s,color .25s;
   overflow-x:clip;
   width:100%;
+  position:relative;
 }
 
 /* ═══════════════════════════════
@@ -122,7 +131,7 @@ header{
 @keyframes spin{to{transform:rotate(360deg)}}
 
 /* TABS */
-.tabs{display:flex;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;-webkit-overflow-scrolling:touch;contain:inline-size}
+.tabs{display:flex;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;-webkit-overflow-scrolling:touch}
 .tabs::-webkit-scrollbar{display:none}
 .tab{
   font-family:var(--sans);font-size:.71rem;font-weight:500;
@@ -143,7 +152,7 @@ header{
 /* ═══════════════════════════════
    MAIN
 ═══════════════════════════════ */
-main{max-width:1200px;margin:0 auto;padding:1.2rem 1.25rem;overflow-x:clip;contain:inline-size}
+main{max-width:1200px;margin:0 auto;padding:1.2rem 1.25rem;overflow-x:clip}
 
 /* Loading */
 #loading{
@@ -176,7 +185,7 @@ main{max-width:1200px;margin:0 auto;padding:1.2rem 1.25rem;overflow-x:clip;conta
   padding:.5rem 1.25rem;border-radius:20px;cursor:pointer;margin-top:.5rem;
 }
 
-#content{display:none}
+#content{display:none;width:100%;box-sizing:border-box}
 
 /* ═══════════════════════════════
    SECTION HEADER — single gray line, title pill only
@@ -184,6 +193,7 @@ main{max-width:1200px;margin:0 auto;padding:1.2rem 1.25rem;overflow-x:clip;conta
 .shd{
   display:flex;align-items:center;gap:.65rem;
   margin-bottom:1rem;margin-top:2.2rem;
+  max-width:100%;overflow:hidden;
 }
 .shd:first-child{margin-top:0}
 
@@ -230,7 +240,8 @@ main{max-width:1200px;margin:0 auto;padding:1.2rem 1.25rem;overflow-x:clip;conta
   cursor:pointer;box-shadow:var(--sh);
   transition:box-shadow .2s,border-color .2s;
   animation:fu .4s ease both;
-  width:100%;box-sizing:border-box;
+  box-sizing:border-box;
+  max-width:100%;
 }
 @media(max-width:580px){
   .hero{padding:1rem}
@@ -269,6 +280,7 @@ main{max-width:1200px;margin:0 auto;padding:1.2rem 1.25rem;overflow-x:clip;conta
   border-radius:0 0 var(--r) var(--r);overflow:hidden;
   margin-bottom:.8rem;
   width:100%;max-width:100%;
+  box-sizing:border-box;
 }
 /* Griglia adattiva: se ci sono meno di 4 notizie non lascia celle vuote */
 .grid:has(.ncard:nth-child(1):last-child){grid-template-columns:1fr}
@@ -413,7 +425,7 @@ main{max-width:1200px;margin:0 auto;padding:1.2rem 1.25rem;overflow-x:clip;conta
 </style>
 </head>
 <body>
-
+<div id="page-wrap">
 <header>
   <div class="hw">
     <div class="h-top">
@@ -472,6 +484,7 @@ main{max-width:1200px;margin:0 auto;padding:1.2rem 1.25rem;overflow-x:clip;conta
   </div>
   <div id="content"></div>
 </main>
+</div><!-- #page-wrap -->
 
 <!-- MODAL -->
 <div class="mov" id="modal" onclick="if(event.target===this)closeM()">
@@ -614,7 +627,7 @@ const FEEDS = {
 const PER_SOURCE = 4;  /* 4 per fonte → round-robin dà varietà + fill-up se feed scarsi */
 const HOME_GRID  = 8;
 const SEC_GRID   = 25;  /* 25 card nella scheda singola (hero + 24 grid) */
-const CACHE_KEY  = 'mp_v10';
+const CACHE_KEY  = 'mp_v11';
 const CACHE_TTL  = 15 * 60 * 1000;
 
 /* ── 3 proxy in cascata — il primo che risponde vince ──
@@ -750,10 +763,17 @@ async function loadAll(){
     groups[cat].push(items);
   }
 
-  /* Round-robin per categoria */
+  /* Round-robin per categoria, poi ordina cronologicamente */
   const result = {it:[], eu:[], usa:[]};
   for(const cat of ['it','eu','usa']){
-    result[cat] = roundRobin(groups[cat]||[]);
+    const mixed = roundRobin(groups[cat]||[]);
+    /* Ordina per data decrescente (più recente prima) */
+    mixed.sort((a,b) => {
+      const ta = a.pubDate ? new Date(a.pubDate).getTime() : 0;
+      const tb = b.pubDate ? new Date(b.pubDate).getTime() : 0;
+      return tb - ta;
+    });
+    result[cat] = mixed;
   }
 
   const tot=Object.values(result).reduce((s,a)=>s+a.length,0);
