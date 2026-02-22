@@ -220,10 +220,15 @@ main{max-width:1200px;margin:0 auto;padding:1.2rem 1.25rem}
 .hero{
   background:var(--surf);border:1px solid var(--bord);
   border-radius:var(--r) var(--r) 0 0;
-  padding:1.2rem;margin-bottom:0;border-bottom:none;
+  padding:1.2rem;margin-bottom:0;
+  border-bottom:1px solid var(--bord);
   cursor:pointer;box-shadow:var(--sh);
   transition:box-shadow .2s,border-color .2s;
   animation:fu .4s ease both;
+}
+/* Su mobile l'hero è full-width sopra la griglia */
+@media(max-width:580px){
+  .hero{border-radius:var(--r) var(--r) 0 0;padding:1rem}
 }
 .hero:hover{box-shadow:var(--sh2);border-color:var(--bord2)}
 .hero-title{
@@ -262,8 +267,12 @@ main{max-width:1200px;margin:0 auto;padding:1.2rem 1.25rem}
 .grid:has(.ncard:nth-child(1):last-child){grid-template-columns:1fr}
 .grid:has(.ncard:nth-child(2):last-child){grid-template-columns:repeat(2,1fr)}
 .grid:has(.ncard:nth-child(3):last-child){grid-template-columns:repeat(3,1fr)}
-@media(max-width:900px){.grid{grid-template-columns:repeat(3,1fr)}}
-@media(max-width:580px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:1024px){.grid{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:860px){.grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:580px){
+  /* Su mobile: SEMPRE 2 colonne, override del dynamic cols inline */
+  .grid{grid-template-columns:repeat(2,1fr) !important}
+}
 
 .ncard{
   background:var(--surf);padding:.85rem;
@@ -505,10 +514,10 @@ const FEEDS = {
   ]
 };
 
-const PER_SOURCE = 3;
+const PER_SOURCE = 4;  /* 4 per fonte → round-robin dà varietà + fill-up se feed scarsi */
 const HOME_GRID  = 8;
-const SEC_GRID   = 24;
-const CACHE_KEY  = 'mp_v6';
+const SEC_GRID   = 25;  /* 25 card nella scheda singola (hero + 24 grid) */
+const CACHE_KEY  = 'mp_v8';
 const CACHE_TTL  = 15 * 60 * 1000;
 
 /* ── 3 proxy in cascata — il primo che risponde vince ──
@@ -548,26 +557,28 @@ function applyTheme(t){
 
 window.onload=()=>{ initTheme(); const c=getCache(); if(c){news=c;render()}else loadAll(); };
 
-/* ── Fetch con proxy fallback ── */
+/* ── Fetch con proxy paralleli — il più veloce vince ── */
 async function fetchWithProxy(feedUrl){
-  for(const makeUrl of PROXIES){
-    try{
-      const r = await fetch(makeUrl(feedUrl), {signal: AbortSignal.timeout(6000)});
-      if(!r.ok) continue;
-      const text = await r.text();
-      /* rss2json restituisce JSON direttamente */
-      if(text.trim().startsWith('{')){
-        const d = JSON.parse(text);
-        /* allorigins wrappa in {contents:'...'} */
-        if(d.contents) return parseRSS(d.contents);
-        if(d.items)    return d.items;
-        if(d.status==='ok') return d.items||[];
-      }
-      /* corsproxy restituisce XML grezzo */
-      return parseRSS(text);
-    }catch{ continue }
-  }
-  return [];
+  /* Tenta tutti i proxy in parallelo, prende il primo che risponde OK */
+  const attempts = PROXIES.map(async makeUrl => {
+    const r = await fetch(makeUrl(feedUrl), {signal: AbortSignal.timeout(5000)});
+    if(!r.ok) throw new Error('not ok');
+    const text = await r.text();
+    if(!text || text.length < 50) throw new Error('empty');
+    if(text.trim().startsWith('{')){
+      const d = JSON.parse(text);
+      if(d.contents){ const items=parseRSS(d.contents); if(items.length) return items; throw new Error('empty xml'); }
+      if(d.items?.length)    return d.items;
+      if(d.status==='ok' && d.items) return d.items;
+      throw new Error('no items');
+    }
+    const items = parseRSS(text);
+    if(!items.length) throw new Error('no items xml');
+    return items;
+  });
+  try{
+    return await Promise.any(attempts);
+  }catch{ return []; }
 }
 
 /* Parser XML grezzo per i proxy che restituiscono XML */
@@ -615,20 +626,41 @@ async function loadAll(){
   const labels={it:'Italia',eu:'Europa',usa:'USA'};
   const groups={it:[],eu:[],usa:[]};
 
-  for(const[cat,feeds] of Object.entries(FEEDS)){
-    setLMsg(`Carico ${labels[cat]}…`);
-    const settled = await Promise.allSettled(feeds.map(f=>fetchFeed(f,cat)));
-    const perSrc  = settled.map(r=>r.status==='fulfilled'?r.value:[]);
-    groups[cat]   = roundRobin(perSrc);
+  /* Fetch TUTTI i feed di tutte le categorie in parallelo —
+     non aspettiamo categoria per categoria */
+  setLMsg('Carico tutte le fonti in parallelo…');
+
+  const allEntries = Object.entries(FEEDS).flatMap(([cat,feeds]) =>
+    shuffle(feeds).map(f => ({f,cat}))
+  );
+
+  const settled = await Promise.allSettled(
+    allEntries.map(({f,cat}) => fetchFeed(f,cat))
+  );
+
+  for(let i=0; i<allEntries.length; i++){
+    const {cat} = allEntries[i];
+    const items = settled[i].status==='fulfilled' ? settled[i].value : [];
+    if(!groups[cat]) groups[cat]=[];
+    /* Raggruppa per fonte per il round-robin */
+    groups[cat].push(items);
   }
 
-  const tot=Object.values(groups).reduce((s,a)=>s+a.length,0);
+  /* Round-robin per categoria */
+  const result = {it:[], eu:[], usa:[]};
+  for(const cat of ['it','eu','usa']){
+    result[cat] = roundRobin(groups[cat]||[]);
+  }
+
+  const tot=Object.values(result).reduce((s,a)=>s+a.length,0);
   if(!tot){ showS('error'); btn.disabled=false; btn.classList.remove('loading'); return; }
-  news={...groups, ts:Date.now()};
+  news={...result, ts:Date.now()};
   setCache(news); render();
 }
 
-/* Round-robin garantisce una notizia per fonte a turno */
+/* Round-robin: garantisce varietà di fonti
+   Prima passa: 1 articolo per fonte (massima varietà)
+   Seconda+ passa: articoli extra finché non ci sono duplicati */
 function roundRobin(arrays){
   const res=[],seen=new Set();
   const qs=arrays.map(a=>[...a]);
@@ -644,6 +676,17 @@ function roundRobin(arrays){
     }
   }
   return res;
+}
+
+/* Shuffle array — usato per randomizzare l'ordine dei feed ad ogni caricamento
+   così le fonti che "vincono" il round-robin cambiano ogni volta */
+function shuffle(arr){
+  const a=[...arr];
+  for(let i=a.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a;
 }
 
 function refresh(){ localStorage.removeItem(CACHE_KEY); loadAll(); }
