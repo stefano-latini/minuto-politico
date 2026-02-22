@@ -51,7 +51,7 @@
 /* ═══════════════════════════════
    RESET
 ═══════════════════════════════ */
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html{
   -webkit-text-size-adjust:100%;
   overflow-x:hidden;
@@ -312,6 +312,15 @@ main{max-width:1200px;margin:0 auto;padding:1.2rem 1.25rem;overflow-x:hidden}
 .ncard:hover .ct{color:var(--it)}
 .ncard.eu:hover  .ct{color:var(--eu)}
 .ncard.usa:hover .ct{color:var(--usa)}
+
+/* Su touch: niente highlight durante scroll */
+@media(hover:none){
+  .ncard:hover,.ncard:active{background:var(--surf) !important}
+  .ncard:hover .ct,.ncard:active .ct{color:var(--txt) !important}
+  .hero:hover,.hero:active{box-shadow:var(--sh) !important;border-color:var(--bord) !important}
+  .hero:hover .hero-title,.hero:active .hero-title{color:var(--txt) !important}
+  * { -webkit-tap-highlight-color: transparent; }
+}
 
 .ct{
   font-family:var(--serif);font-size:.86rem;font-weight:700;
@@ -873,7 +882,7 @@ function tbadge(n){ return n.translated?`<span class="tbadge">trad.</span>`:''; 
 
 function heroTpl(n){
   const e=enc(n);
-  return `<div class="hero ${n.cat}" onclick="openM('${e}')">
+  return `<div class="hero ${n.cat}" data-enc="${e}">
     <span class="sbadge ${n.cat}">${n.source}</span>${tbadge(n)}
     <div class="hero-title">${n.title}</div>
     <div class="hero-sum">${n.summary}</div>
@@ -882,7 +891,7 @@ function heroTpl(n){
 }
 function cardTpl(n,i){
   const e=enc(n);
-  return `<div class="ncard ${n.cat}" style="animation-delay:${i*.04}s" onclick="openM('${e}')">
+  return `<div class="ncard ${n.cat}" style="animation-delay:${i*.04}s" data-enc="${e}">
     <span class="sbadge ${n.cat}">${n.source}</span>${tbadge(n)}
     <div class="ct">${n.title}</div>
     <div class="ce">${n.summary}</div>
@@ -956,25 +965,54 @@ function getCache(){
 }
 </script>
 <script>
-/* Blocca scroll orizzontale su iOS Safari */
 (function(){
-  var startX, startY;
+  var startX, startY, moved;
+  var TAP_THRESHOLD = 10; // px — oltre questa soglia è scroll, non tap
+
   document.addEventListener('touchstart', function(e){
     startX = e.touches[0].clientX;
     startY = e.touches[0].clientY;
+    moved = false;
   }, {passive: true});
+
   document.addEventListener('touchmove', function(e){
+    var dx = Math.abs(e.touches[0].clientX - startX);
+    var dy = Math.abs(e.touches[0].clientY - startY);
+    if(dx > TAP_THRESHOLD || dy > TAP_THRESHOLD) moved = true;
+    // Blocca scroll orizzontale ovunque tranne nei .tabs
     if(!e.cancelable) return;
-    // Lascia scorrere orizzontalmente solo dentro .tabs
     var el = e.target;
     while(el && el !== document.body){
       if(el.classList && el.classList.contains('tabs')) return;
       el = el.parentElement;
     }
-    var dx = Math.abs(e.touches[0].clientX - startX);
-    var dy = Math.abs(e.touches[0].clientY - startY);
     if(dx > dy) e.preventDefault();
   }, {passive: false});
+
+  document.addEventListener('touchend', function(e){
+    if(moved) return; // era uno scroll, ignora
+    // Cerca il target con data-enc (card o hero)
+    var el = e.target;
+    while(el && el !== document.body){
+      if(el.dataset && el.dataset.enc){
+        openM(el.dataset.enc);
+        return;
+      }
+      el = el.parentElement;
+    }
+  }, {passive: true});
+
+  // Mantieni anche click per desktop
+  document.addEventListener('click', function(e){
+    var el = e.target;
+    while(el && el !== document.body){
+      if(el.dataset && el.dataset.enc){
+        openM(el.dataset.enc);
+        return;
+      }
+      el = el.parentElement;
+    }
+  });
 })();
 </script>
 </body>
