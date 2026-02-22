@@ -6,6 +6,8 @@
 <title>Minuto Politico</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%2317140e'/%3E%3Ctext x='32' y='26' font-family='system-ui,sans-serif' font-weight='700' font-size='15' fill='%23e4dccb' text-anchor='middle' letter-spacing='-0.5'%3Eminuto%3C/text%3E%3Ctext x='32' y='44' font-family='system-ui,sans-serif' font-weight='700' font-size='15' fill='%23b83232' text-anchor='middle' letter-spacing='-0.5'%3Epolitico%3C/text%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%2317140e'/%3E%3Ctext x='32' y='26' font-family='system-ui,sans-serif' font-weight='700' font-size='15' fill='%23e4dccb' text-anchor='middle' letter-spacing='-0.5'%3Eminuto%3C/text%3E%3Ctext x='32' y='44' font-family='system-ui,sans-serif' font-weight='700' font-size='15' fill='%23b83232' text-anchor='middle' letter-spacing='-0.5'%3Epolitico%3C/text%3E%3C/svg%3E">
 <style>
 /* ═══════════════════════════════
    TOKENS
@@ -50,11 +52,13 @@
    RESET
 ═══════════════════════════════ */
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
+html{-webkit-text-size-adjust:100%;overflow-x:hidden}
 body{
   background:var(--bg);color:var(--txt);
   font-family:var(--serif);line-height:1.6;min-height:100vh;
   transition:background .25s,color .25s;
+  overflow-x:hidden;
+  max-width:100vw;
 }
 
 /* ═══════════════════════════════
@@ -138,7 +142,7 @@ header{
 /* ═══════════════════════════════
    MAIN
 ═══════════════════════════════ */
-main{max-width:1200px;margin:0 auto;padding:1.2rem 1.25rem}
+main{max-width:1200px;margin:0 auto;padding:1.2rem 1.25rem;overflow-x:hidden}
 
 /* Loading */
 #loading{
@@ -477,47 +481,133 @@ main{max-width:1200px;margin:0 auto;padding:1.2rem 1.25rem}
 /* ═══════════════════════════════════════════
    FEED CONFIG
 ═══════════════════════════════════════════ */
+/* Ogni fonte ha urls[] — vengono provati tutti in parallelo.
+   URL alternativi aumentano drasticamente la probabilità di successo. */
 const FEEDS = {
   it: [
-    { name:'ANSA',           url:'https://www.ansa.it/sito/notizie/politica/politica_rss.xml',       lang:'it' },
-    { name:'Corriere',       url:'https://www.corriere.it/dynamic-feed/rss/section/politica/',        lang:'it' },
-    { name:'Repubblica',     url:'https://www.repubblica.it/rss/politica/rss2.0.xml',                 lang:'it' },
-    { name:'Il Post',        url:'https://www.ilpost.it/politica/feed/',                              lang:'it' },
-    { name:'Il Sole 24 Ore', url:'https://www.ilsole24ore.com/rss/politica--italia.xml',              lang:'it' },
-    { name:'La Stampa',      url:'https://www.lastampa.it/rss/politica.xml',                          lang:'it' },
-    { name:'Il Fatto',       url:'https://www.ilfattoquotidiano.it/category/politica/feed/',           lang:'it' },
-    { name:'Il Foglio',      url:'https://www.ilfoglio.it/rss/politica/',                             lang:'it' },
-    { name:'HuffPost IT',    url:'https://www.huffingtonpost.it/feeds/index.xml',                     lang:'it' },
-    { name:'Open',           url:'https://www.open.online/category/politica/feed/',                   lang:'it' },
+    { name:'ANSA', lang:'it', urls:[
+        'https://www.ansa.it/sito/notizie/politica/politica_rss.xml',
+        'https://www.ansa.it/sito/notizie/politica/governo/governo_rss.xml',
+    ]},
+    { name:'Corriere', lang:'it', urls:[
+        'https://www.corriere.it/dynamic-feed/rss/section/politica/',
+        'https://xml2.corriereobjects.it/rss/homepage.xml',
+        'https://www.corriere.it/rss/homepage.xml',
+    ]},
+    { name:'Repubblica', lang:'it', urls:[
+        'https://www.repubblica.it/rss/politica/rss2.0.xml',
+        'https://www.repubblica.it/rss/homepage/rss2.0.xml',
+    ]},
+    { name:'Il Post', lang:'it', urls:[
+        'https://www.ilpost.it/politica/feed/',
+        'https://www.ilpost.it/feed/',
+    ]},
+    { name:'Il Sole 24 Ore', lang:'it', urls:[
+        'https://www.ilsole24ore.com/rss/politica--italia.xml',
+        'https://www.ilsole24ore.com/rss/notizie.xml',
+        'https://www.ilsole24ore.com/rss/italia.xml',
+    ]},
+    { name:'La Stampa', lang:'it', urls:[
+        'https://www.lastampa.it/rss/politica.xml',
+        'https://www.lastampa.it/rss/home.xml',
+        'https://www.lastampa.it/rss/italia.xml',
+    ]},
+    { name:'Il Fatto', lang:'it', urls:[
+        'https://www.ilfattoquotidiano.it/category/politica/feed/',
+        'https://www.ilfattoquotidiano.it/feed/',
+        'https://www.ilfattoquotidiano.it/in-edicola/feed/',
+    ]},
+    { name:'Il Foglio', lang:'it', urls:[
+        'https://www.ilfoglio.it/rss/politica/',
+        'https://www.ilfoglio.it/rss/',
+    ]},
+    { name:'HuffPost IT', lang:'it', urls:[
+        'https://www.huffingtonpost.it/feeds/index.xml',
+        'https://www.huffingtonpost.it/rss/',
+    ]},
+    { name:'Open', lang:'it', urls:[
+        'https://www.open.online/category/politica/feed/',
+        'https://www.open.online/feed/',
+    ]},
   ],
   eu: [
-    { name:'Euractiv',        url:'https://www.euractiv.com/sections/eu-politics/feed/',              lang:'en' },
-    { name:'Politico EU',     url:'https://www.politico.eu/feed/',                                    lang:'en' },
-    { name:'EUobserver',      url:'https://euobserver.com/rss.xml',                                   lang:'en' },
-    { name:'Il Post Europa',  url:'https://www.ilpost.it/tag/europa/feed/',                           lang:'it' },
-    { name:'Il Post Esteri',  url:'https://www.ilpost.it/esteri/feed/',                               lang:'it' },
-    { name:'ANSA Europa',     url:'https://www.ansa.it/sito/notizie/mondo/europa/europa_rss.xml',     lang:'it' },
-    { name:'Rep. Esteri',     url:'https://www.repubblica.it/rss/esteri/rss2.0.xml',                  lang:'it' },
-    { name:'Corriere Esteri', url:'https://www.corriere.it/dynamic-feed/rss/section/esteri/',         lang:'it' },
-    { name:'La Stampa Mondo', url:'https://www.lastampa.it/rss/esteri.xml',                           lang:'it' },
+    { name:'Euractiv', lang:'en', urls:[
+        'https://www.euractiv.com/sections/eu-politics/feed/',
+        'https://www.euractiv.com/feed/',
+    ]},
+    { name:'Politico EU', lang:'en', urls:[
+        'https://www.politico.eu/feed/',
+        'https://www.politico.eu/rss/eu-confidential/',
+    ]},
+    { name:'EUobserver', lang:'en', urls:[
+        'https://euobserver.com/rss.xml',
+        'https://euobserver.com/toc/rss.xml',
+    ]},
+    { name:'Il Post Europa', lang:'it', urls:[
+        'https://www.ilpost.it/tag/europa/feed/',
+        'https://www.ilpost.it/esteri/feed/',
+    ]},
+    { name:'ANSA Europa', lang:'it', urls:[
+        'https://www.ansa.it/sito/notizie/mondo/europa/europa_rss.xml',
+        'https://www.ansa.it/europa/notizie/rss.xml',
+    ]},
+    { name:'Rep. Esteri', lang:'it', urls:[
+        'https://www.repubblica.it/rss/esteri/rss2.0.xml',
+        'https://www.repubblica.it/rss/homepage/rss2.0.xml',
+    ]},
+    { name:'Corriere Esteri', lang:'it', urls:[
+        'https://www.corriere.it/dynamic-feed/rss/section/esteri/',
+        'https://xml2.corriereobjects.it/rss/esteri.xml',
+    ]},
+    { name:'La Stampa Mondo', lang:'it', urls:[
+        'https://www.lastampa.it/rss/esteri.xml',
+        'https://www.lastampa.it/rss/home.xml',
+    ]},
+    { name:'Il Sole Mondo', lang:'it', urls:[
+        'https://www.ilsole24ore.com/rss/mondo.xml',
+    ]},
   ],
   usa: [
-    { name:'Politico',          url:'https://www.politico.com/rss/politics08.xml',                    lang:'en' },
-    { name:'NPR Politics',      url:'https://feeds.npr.org/1014/rss.xml',                             lang:'en' },
-    { name:'AP Politics',       url:'https://feeds.apnews.com/rss/apf-politics',                      lang:'en' },
-    { name:'The Hill',          url:'https://thehill.com/rss/syndicator/19109',                        lang:'en' },
-    { name:'Semafor',           url:'https://www.semafor.com/rss/politics.xml',                       lang:'en' },
-    { name:'NY Times Politics', url:'https://rss.nytimes.com/services/xml/rss/nyt/Politics.xml',      lang:'en' },
-    { name:'Il Post USA',       url:'https://www.ilpost.it/tag/stati-uniti/feed/',                    lang:'it' },
-    { name:'ANSA Americhe',     url:'https://www.ansa.it/sito/notizie/mondo/americhe/americhe_rss.xml',lang:'it'},
-    { name:'Corriere USA',      url:'https://www.corriere.it/dynamic-feed/rss/section/esteri/',        lang:'it' },
+    { name:'Politico', lang:'en', urls:[
+        'https://www.politico.com/rss/politics08.xml',
+        'https://www.politico.com/rss/politicopicks.xml',
+    ]},
+    { name:'NPR Politics', lang:'en', urls:[
+        'https://feeds.npr.org/1014/rss.xml',
+        'https://feeds.npr.org/1001/rss.xml',
+    ]},
+    { name:'AP Politics', lang:'en', urls:[
+        'https://feeds.apnews.com/rss/apf-politics',
+        'https://feeds.apnews.com/rss/apf-topnews',
+    ]},
+    { name:'The Hill', lang:'en', urls:[
+        'https://thehill.com/rss/syndicator/19109',
+        'https://thehill.com/news/feed/',
+    ]},
+    { name:'Semafor', lang:'en', urls:[
+        'https://www.semafor.com/rss/politics.xml',
+        'https://www.semafor.com/rss.xml',
+    ]},
+    { name:'NY Times', lang:'en', urls:[
+        'https://rss.nytimes.com/services/xml/rss/nyt/Politics.xml',
+        'https://rss.nytimes.com/services/xml/rss/nyt/US.xml',
+    ]},
+    { name:'Il Post USA', lang:'it', urls:[
+        'https://www.ilpost.it/tag/stati-uniti/feed/',
+    ]},
+    { name:'ANSA Americhe', lang:'it', urls:[
+        'https://www.ansa.it/sito/notizie/mondo/americhe/americhe_rss.xml',
+    ]},
+    { name:'Rep. USA', lang:'it', urls:[
+        'https://www.repubblica.it/rss/esteri/rss2.0.xml',
+    ]},
   ]
 };
 
 const PER_SOURCE = 4;  /* 4 per fonte → round-robin dà varietà + fill-up se feed scarsi */
 const HOME_GRID  = 8;
 const SEC_GRID   = 25;  /* 25 card nella scheda singola (hero + 24 grid) */
-const CACHE_KEY  = 'mp_v8';
+const CACHE_KEY  = 'mp_v9';
 const CACHE_TTL  = 15 * 60 * 1000;
 
 /* ── 3 proxy in cascata — il primo che risponde vince ──
@@ -599,7 +689,14 @@ function parseRSS(xml){
 
 async function fetchFeed(feed, cat){
   try{
-    const items = await fetchWithProxy(feed.url);
+    /* Prova tutti gli URL alternativi in parallelo — prende il primo che funziona */
+    const urls = feed.urls || [feed.url];
+    const attempts = urls.map(u => fetchWithProxy(u).then(items => {
+      if(!items.length) throw new Error('empty');
+      return items;
+    }));
+    let items = [];
+    try{ items = await Promise.any(attempts); }catch{ return []; }
     if(!items.length) return [];
     const slice = items.slice(0, PER_SOURCE);
     const out   = [];
