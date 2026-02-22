@@ -2,7 +2,7 @@
 <html lang="it" data-theme="auto">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
 <title>Minuto Politico</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
@@ -67,11 +67,11 @@ body{
   max-width:100%;
   position:relative;
 }
-/* Wrapper principale */
+/* Wrapper principale — isola overflow senza conflitti con sticky */
 #page-wrap{
   width:100%;
-  max-width:100%;
-  overflow:hidden;
+  max-width:100vw;
+  overflow-x:hidden;
   position:relative;
 }
 
@@ -431,7 +431,6 @@ main{max-width:1200px;margin:0 auto;padding:1.2rem 1.25rem;overflow-x:hidden}
 </style>
 </head>
 <body>
-<div id="page-wrap">
 <header>
   <div class="hw">
     <div class="h-top">
@@ -472,7 +471,7 @@ main{max-width:1200px;margin:0 auto;padding:1.2rem 1.25rem;overflow-x:hidden}
     </nav>
   </div>
 </header>
-
+<div id="page-wrap">
 <main>
   <div id="loading">
     <div class="ll">Minuto<span class="dot">.</span>Politico</div>
