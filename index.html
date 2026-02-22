@@ -7,47 +7,48 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
 <style>
-/* ════════════════════════════════════════
-   DESIGN TOKENS
-════════════════════════════════════════ */
-:root {
-  --it:    #b83232;
-  --eu:    #1b4f72;
-  --usa:   #6b5900;
-  --serif: 'Lora', Georgia, serif;
-  --sans:  'DM Sans', system-ui, sans-serif;
-  --r:     10px;
-  --r-sm:  6px;
+/* ═══════════════════════════════
+   TOKENS
+═══════════════════════════════ */
+:root{
+  --it:#b83232; --eu:#1b4f72; --usa:#6b5900;
+  --serif:'Lora',Georgia,serif;
+  --sans:'DM Sans',system-ui,sans-serif;
+  --r:10px; --r-sm:6px; --r-xs:4px;
 }
 
 /* LIGHT */
-[data-theme="light"],[data-theme="auto"] {
-  --bg:    #f7f5f0; --bg2: #edeae2;
-  --surf:  #ffffff; --bord: #ddd8cf; --bord2: #c9c2b5;
-  --txt:   #17140e; --txt2: #4a4338; --muted: #8e877c;
-  --hbg:   rgba(247,245,240,.97);
-  --tit:   #f8eded; --teu: #e5eef7; --tusa: #faf4de;
-  --sh:    0 1px 4px rgba(0,0,0,.07); --sh2: 0 6px 28px rgba(0,0,0,.11);
-  --tb-bg: #f0ece3; --tb-c: #7a7060;
+[data-theme="light"],[data-theme="auto"]{
+  --bg:#f7f5f0; --bg2:#edeae2; --surf:#fff;
+  --bord:#ddd8cf; --bord2:#c9c2b5;
+  --txt:#17140e; --txt2:#4a4338; --muted:#8e877c;
+  --hbg:rgba(247,245,240,.97);
+  --tit:#f8eded; --teu:#e5eef7; --tusa:#faf4de;
+  --sh:0 1px 4px rgba(0,0,0,.07); --sh2:0 6px 28px rgba(0,0,0,.11);
+  --tb-bg:#f0ece3; --tb-c:#7a7060;
 }
 @media(prefers-color-scheme:dark){[data-theme="auto"]{
-  --bg:#0f0e09;--bg2:#171510;--surf:#1b1914;--bord:#2a271f;--bord2:#383429;
-  --txt:#e3dbc9;--txt2:#9c9378;--muted:#5c5547;--hbg:rgba(15,14,9,.97);
-  --tit:rgba(184,50,50,.15);--teu:rgba(27,79,114,.18);--tusa:rgba(107,89,0,.18);
-  --sh:0 1px 4px rgba(0,0,0,.3);--sh2:0 6px 28px rgba(0,0,0,.5);
-  --tb-bg:rgba(255,255,255,.05);--tb-c:#6a6050;
+  --bg:#0f0e09; --bg2:#171510; --surf:#1b1914;
+  --bord:#2a271f; --bord2:#383429;
+  --txt:#e3dbc9; --txt2:#9c9378; --muted:#5c5547;
+  --hbg:rgba(15,14,9,.97);
+  --tit:rgba(184,50,50,.15); --teu:rgba(27,79,114,.18); --tusa:rgba(107,89,0,.18);
+  --sh:0 1px 4px rgba(0,0,0,.3); --sh2:0 6px 28px rgba(0,0,0,.5);
+  --tb-bg:rgba(255,255,255,.05); --tb-c:#6a6050;
 }}
 [data-theme="dark"]{
-  --bg:#0f0e09;--bg2:#171510;--surf:#1b1914;--bord:#2a271f;--bord2:#383429;
-  --txt:#e3dbc9;--txt2:#9c9378;--muted:#5c5547;--hbg:rgba(15,14,9,.97);
-  --tit:rgba(184,50,50,.15);--teu:rgba(27,79,114,.18);--tusa:rgba(107,89,0,.18);
-  --sh:0 1px 4px rgba(0,0,0,.3);--sh2:0 6px 28px rgba(0,0,0,.5);
-  --tb-bg:rgba(255,255,255,.05);--tb-c:#6a6050;
+  --bg:#0f0e09; --bg2:#171510; --surf:#1b1914;
+  --bord:#2a271f; --bord2:#383429;
+  --txt:#e3dbc9; --txt2:#9c9378; --muted:#5c5547;
+  --hbg:rgba(15,14,9,.97);
+  --tit:rgba(184,50,50,.15); --teu:rgba(27,79,114,.18); --tusa:rgba(107,89,0,.18);
+  --sh:0 1px 4px rgba(0,0,0,.3); --sh2:0 6px 28px rgba(0,0,0,.5);
+  --tb-bg:rgba(255,255,255,.05); --tb-c:#6a6050;
 }
 
-/* ════════════════════════════════════════
+/* ═══════════════════════════════
    RESET
-════════════════════════════════════════ */
+═══════════════════════════════ */
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 body{
@@ -56,9 +57,9 @@ body{
   transition:background .25s,color .25s;
 }
 
-/* ════════════════════════════════════════
+/* ═══════════════════════════════
    HEADER
-════════════════════════════════════════ */
+═══════════════════════════════ */
 header{
   background:var(--hbg);border-bottom:1px solid var(--bord);
   position:sticky;top:0;z-index:100;
@@ -71,45 +72,41 @@ header{
   gap:.6rem;padding:.6rem 0;border-bottom:1px solid var(--bord);
 }
 
-/* Brand */
 .brand{
   font-family:var(--sans);font-weight:700;
-  font-size:clamp(1rem,3.6vw,1.45rem);
+  font-size:clamp(.98rem,3.4vw,1.4rem);
   letter-spacing:-.035em;line-height:1;
   color:var(--txt);white-space:nowrap;user-select:none;
 }
 .brand .dot{color:var(--it)}
 
-/* Controls */
-.hc{display:flex;align-items:center;gap:.5rem;flex-shrink:0}
+.hc{display:flex;align-items:center;gap:.45rem;flex-shrink:0}
 
-.sdot{
-  width:6px;height:6px;border-radius:50%;
-  background:var(--it);flex-shrink:0;
-  animation:blink 2s infinite;
-}
+/* Status */
+.sdot{width:6px;height:6px;border-radius:50%;background:var(--it);animation:blink 2s infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
-#stxt{font-family:var(--sans);font-size:.65rem;color:var(--muted)}
+#stxt{font-family:var(--sans);font-size:.63rem;color:var(--muted)}
 
-/* Theme toggle — SVG icons, no emoji */
+/* Theme toggle — SVG minimal */
 .tgl{
   display:flex;background:var(--bg2);border:1px solid var(--bord);
   border-radius:20px;padding:2px;gap:1px;
 }
 .tb{
   background:none;border:none;cursor:pointer;
-  padding:.26rem .44rem;border-radius:18px;
-  color:var(--muted);transition:all .15s;line-height:0;display:flex;align-items:center;
+  padding:.25rem .42rem;border-radius:18px;
+  color:var(--muted);transition:all .15s;
+  line-height:0;display:flex;align-items:center;justify-content:center;
 }
-.tb svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.tb svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 .tb.active{background:var(--surf);color:var(--txt);box-shadow:var(--sh)}
 .tb:hover:not(.active){color:var(--txt2)}
 
-/* Refresh */
+/* Refresh btn */
 .rbtn{
-  font-family:var(--sans);font-size:.7rem;font-weight:600;letter-spacing:.02em;
+  font-family:var(--sans);font-size:.69rem;font-weight:600;letter-spacing:.015em;
   background:var(--it);color:#fff;border:none;
-  padding:.4rem .85rem;border-radius:20px;
+  padding:.38rem .8rem;border-radius:20px;
   cursor:pointer;transition:opacity .2s;
   display:flex;align-items:center;gap:.3rem;white-space:nowrap;
 }
@@ -119,26 +116,29 @@ header{
 .rbtn.loading .ri{animation:spin 1s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* Tabs */
+/* TABS */
 .tabs{display:flex;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none}
 .tabs::-webkit-scrollbar{display:none}
 .tab{
-  font-family:var(--sans);font-size:.72rem;font-weight:500;letter-spacing:.01em;
-  padding:.6rem .95rem .55rem;border:none;background:none;
+  font-family:var(--sans);font-size:.71rem;font-weight:500;
+  letter-spacing:.01em;
+  padding:.55rem .85rem .5rem;border:none;background:none;
   color:var(--muted);cursor:pointer;
   border-bottom:2px solid transparent;
   transition:all .15s;white-space:nowrap;flex-shrink:0;
+  display:flex;align-items:center;gap:.4rem;
 }
-.tab:hover{color:var(--txt2)}
-.tab.active{color:var(--txt);border-bottom-color:var(--txt)}
-.tab[data-cat="it"].active{color:var(--it);border-bottom-color:var(--it)}
-.tab[data-cat="eu"].active{color:var(--eu);border-bottom-color:var(--eu)}
-.tab[data-cat="usa"].active{color:var(--usa);border-bottom-color:var(--usa)}
 
-/* ════════════════════════════════════════
+.tab:hover{color:var(--txt2)}
+.tab.active             {color:var(--txt); border-bottom-color:var(--txt)}
+.tab[data-cat="it"].active {color:var(--it);  border-bottom-color:var(--it)}
+.tab[data-cat="eu"].active {color:var(--eu);  border-bottom-color:var(--eu)}
+.tab[data-cat="usa"].active{color:var(--usa); border-bottom-color:var(--usa)}
+
+/* ═══════════════════════════════
    MAIN
-════════════════════════════════════════ */
-main{max-width:1200px;margin:0 auto;padding:1.75rem 1.25rem}
+═══════════════════════════════ */
+main{max-width:1200px;margin:0 auto;padding:1.2rem 1.25rem}
 
 /* Loading */
 #loading{
@@ -146,16 +146,16 @@ main{max-width:1200px;margin:0 auto;padding:1.75rem 1.25rem}
   justify-content:center;min-height:55vh;gap:1.4rem;text-align:center;
 }
 .ll{
-  font-family:var(--sans);font-size:clamp(1.8rem,7vw,3rem);
+  font-family:var(--sans);font-size:clamp(1.8rem,6vw,2.8rem);
   font-weight:700;letter-spacing:-.04em;
   color:var(--bord2);animation:lp 1.6s ease infinite;
 }
 .ll .dot{color:var(--it);opacity:.4}
 @keyframes lp{0%,100%{opacity:.2}50%{opacity:.7}}
-.pb{width:140px;height:2px;background:var(--bord);overflow:hidden;border-radius:2px}
+.pb{width:130px;height:2px;background:var(--bord);overflow:hidden;border-radius:2px}
 .pf{height:100%;background:var(--it);animation:pfx 1.4s ease infinite}
 @keyframes pfx{0%{width:0;transform:translateX(0)}50%{width:55%}100%{width:100%;transform:translateX(110%)}}
-.lm{font-family:var(--sans);font-size:.75rem;color:var(--muted)}
+.lm{font-family:var(--sans);font-size:.73rem;color:var(--muted)}
 
 /* Error */
 #error{
@@ -163,118 +163,112 @@ main{max-width:1200px;margin:0 auto;padding:1.75rem 1.25rem}
   justify-content:center;min-height:50vh;
   gap:1rem;text-align:center;padding:2rem;
 }
-.etitle{font-family:var(--sans);font-size:1.2rem;font-weight:700}
-.emsg{font-family:var(--sans);font-size:.82rem;color:var(--muted);max-width:340px;line-height:1.75}
+.etitle{font-family:var(--sans);font-size:1.15rem;font-weight:700}
+.emsg{font-family:var(--sans);font-size:.8rem;color:var(--muted);max-width:320px;line-height:1.75}
 .btn-retry{
-  font-family:var(--sans);font-size:.72rem;font-weight:600;
+  font-family:var(--sans);font-size:.7rem;font-weight:600;
   background:var(--it);color:#fff;border:none;
-  padding:.52rem 1.3rem;border-radius:20px;cursor:pointer;margin-top:.5rem;
+  padding:.5rem 1.25rem;border-radius:20px;cursor:pointer;margin-top:.5rem;
 }
 
 #content{display:none}
 
-/* ════════════════════════════════════════
-   SECTION HEADER
-════════════════════════════════════════ */
+/* ═══════════════════════════════
+   SECTION HEADER — single gray line, title pill only
+═══════════════════════════════ */
 .shd{
-  display:flex;align-items:center;gap:.7rem;
-  padding-bottom:.55rem;margin-bottom:1.5rem;margin-top:2.75rem;
-  border-bottom:1.5px solid var(--bord);
+  display:flex;align-items:center;gap:.65rem;
+  margin-bottom:1rem;margin-top:2.2rem;
 }
 .shd:first-child{margin-top:0}
-.shd.it{border-bottom-color:var(--it)}
-.shd.eu{border-bottom-color:var(--eu)}
-.shd.usa{border-bottom-color:var(--usa)}
 
-.sico{
-  font-family:var(--sans);font-size:.58rem;font-weight:700;
-  letter-spacing:.12em;text-transform:uppercase;
-  padding:.18rem .5rem;border-radius:var(--r-sm);line-height:1.5;
-}
-.sico.it{background:var(--tit);color:var(--it)}
-.sico.eu{background:var(--teu);color:var(--eu)}
-.sico.usa{background:var(--tusa);color:var(--usa)}
+.shd-label{ display:inline-flex;align-items:center;flex-shrink:0; }
 
+/* Titolo cerchiato, grassetto, leggermente più grande */
 .stitle{
-  font-family:var(--sans);font-size:1.05rem;font-weight:700;
-  letter-spacing:-.025em;color:var(--txt);
+  font-family:var(--sans);font-size:.95rem;font-weight:700;
+  letter-spacing:-.01em;color:var(--txt);line-height:1;
+  border:1.5px solid var(--bord2);
+  border-radius:20px;
+  padding:.22rem .72rem;
 }
-.sline{flex:1;height:1px;background:var(--bord)}
-.scnt{font-family:var(--sans);font-size:.63rem;color:var(--muted)}
 
-/* ════════════════════════════════════════
-   SOURCE BADGE
-════════════════════════════════════════ */
+/* La linea grigia unica */
+.shd-line{flex:1;height:1px;background:var(--bord)}
+
+/* Source badge */
 .sbadge{
-  display:inline-block;font-family:var(--sans);font-size:.6rem;font-weight:600;
-  letter-spacing:.05em;text-transform:uppercase;
-  padding:.12rem .44rem;border-radius:var(--r-sm);margin-bottom:.48rem;
+  display:inline-block;font-family:var(--sans);
+  font-size:.59rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;
+  padding:.11rem .42rem;border-radius:var(--r-sm);margin-bottom:.45rem;
 }
-.sbadge.it{background:var(--tit);color:var(--it)}
-.sbadge.eu{background:var(--teu);color:var(--eu)}
+.sbadge.it {background:var(--tit); color:var(--it)}
+.sbadge.eu {background:var(--teu); color:var(--eu)}
 .sbadge.usa{background:var(--tusa);color:var(--usa)}
 
 /* Translation badge */
 .tbadge{
-  display:inline-block;font-family:var(--sans);font-size:.56rem;font-weight:500;
+  display:inline-block;font-family:var(--sans);font-size:.55rem;font-weight:500;
   letter-spacing:.04em;text-transform:uppercase;
-  padding:.1rem .38rem;border-radius:var(--r-sm);
-  background:var(--tb-bg);color:var(--tb-c);
-  vertical-align:middle;margin-left:.28rem;
+  padding:.09rem .36rem;border-radius:var(--r-sm);
+  background:var(--tb-bg);color:var(--tb-c);vertical-align:middle;margin-left:.25rem;
 }
 
-/* ════════════════════════════════════════
-   HERO CARD — notizia in evidenza
-════════════════════════════════════════ */
+/* ═══════════════════════════════
+   HERO CARD
+═══════════════════════════════ */
 .hero{
   background:var(--surf);border:1px solid var(--bord);
-  border-radius:var(--r);padding:1.5rem;margin-bottom:1px;
+  border-radius:var(--r) var(--r) 0 0;
+  padding:1.2rem;margin-bottom:0;border-bottom:none;
   cursor:pointer;box-shadow:var(--sh);
   transition:box-shadow .2s,border-color .2s;
   animation:fu .4s ease both;
 }
 .hero:hover{box-shadow:var(--sh2);border-color:var(--bord2)}
 .hero-title{
-  font-family:var(--serif);font-size:clamp(1.1rem,3vw,1.55rem);
+  font-family:var(--serif);font-size:clamp(1.05rem,2.8vw,1.5rem);
   font-weight:700;line-height:1.24;letter-spacing:-.02em;
-  margin-bottom:.55rem;color:var(--txt);transition:color .15s;
+  margin-bottom:.5rem;color:var(--txt);transition:color .15s;
 }
-.hero:hover .hero-title{color:var(--it)}
+.hero:hover    .hero-title{color:var(--it)}
 .hero.eu:hover  .hero-title{color:var(--eu)}
 .hero.usa:hover .hero-title{color:var(--usa)}
 .hero-sum{
-  font-family:var(--sans);font-size:.87rem;font-weight:300;
-  line-height:1.75;color:var(--txt2);margin-bottom:.8rem;
+  font-family:var(--sans);font-size:.86rem;font-weight:300;
+  line-height:1.75;color:var(--txt2);margin-bottom:.75rem;
 }
-.hero-foot{
-  font-family:var(--sans);font-size:.64rem;color:var(--muted);
-  display:flex;gap:.65rem;flex-wrap:wrap;align-items:center;
+.cfoot{
+  font-family:var(--sans);font-size:.62rem;color:var(--muted);
+  display:flex;gap:.6rem;flex-wrap:wrap;align-items:center;
 }
-.hero-foot .src{color:var(--txt2);font-weight:600}
+.cfoot .src{color:var(--txt2);font-weight:600}
 .sep{color:var(--bord2)}
-
 @keyframes fu{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 
-/* ════════════════════════════════════════
-   BLOCK GRID — 4 col desktop → 2 col mobile
-   Quadrati puri con padding uniforme
-════════════════════════════════════════ */
+/* ═══════════════════════════════
+   BLOCK GRID
+   Desktop: 4 col | Tablet: 3 | Mobile: 2
+═══════════════════════════════ */
 .grid{
   display:grid;
   grid-template-columns:repeat(4,1fr);
   gap:1px;background:var(--bord);
-  border:1px solid var(--bord);
-  border-radius:var(--r);overflow:hidden;
-  margin-bottom:1rem;
+  border:1px solid var(--bord);border-top:none;
+  border-radius:0 0 var(--r) var(--r);overflow:hidden;
+  margin-bottom:.8rem;
 }
+/* Griglia adattiva: se ci sono meno di 4 notizie non lascia celle vuote */
+.grid:has(.ncard:nth-child(1):last-child){grid-template-columns:1fr}
+.grid:has(.ncard:nth-child(2):last-child){grid-template-columns:repeat(2,1fr)}
+.grid:has(.ncard:nth-child(3):last-child){grid-template-columns:repeat(3,1fr)}
 @media(max-width:900px){.grid{grid-template-columns:repeat(3,1fr)}}
-@media(max-width:600px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:580px){.grid{grid-template-columns:repeat(2,1fr)}}
 
 .ncard{
-  background:var(--surf);padding:1rem;
+  background:var(--surf);padding:.85rem;
   cursor:pointer;transition:background .15s;
   animation:fu .4s ease both;
-  /* aspect-ratio kept loose — content drives height */
   display:flex;flex-direction:column;
 }
 .ncard:hover{background:var(--bg2)}
@@ -283,127 +277,117 @@ main{max-width:1200px;margin:0 auto;padding:1.75rem 1.25rem}
 .ncard.usa:hover .ct{color:var(--usa)}
 
 .ct{
-  font-family:var(--serif);font-size:.88rem;font-weight:700;
-  line-height:1.35;margin:.38rem 0 .44rem;color:var(--txt);transition:color .15s;
-  flex:1;/* push footer down */
+  font-family:var(--serif);font-size:.86rem;font-weight:700;
+  line-height:1.35;margin:.36rem 0 .42rem;
+  color:var(--txt);transition:color .15s;flex:1;
 }
 .ce{
-  font-family:var(--sans);font-size:.73rem;font-weight:300;
-  color:var(--txt2);line-height:1.55;margin-bottom:.6rem;
+  font-family:var(--sans);font-size:.72rem;font-weight:300;
+  color:var(--txt2);line-height:1.55;margin-bottom:.55rem;
   display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;
 }
+@media(max-width:580px){.ce{-webkit-line-clamp:2}}
 .cmeta{
-  font-family:var(--sans);font-size:.62rem;color:var(--muted);
+  font-family:var(--sans);font-size:.6rem;color:var(--muted);
   display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;margin-top:auto;
 }
 .cmeta .src{color:var(--txt2);font-weight:600}
 
-/* ════════════════════════════════════════
-   SOURCE CHIPS
-════════════════════════════════════════ */
-.srcrow{display:flex;flex-wrap:wrap;gap:.3rem;margin-bottom:.25rem}
-.schip{
-  font-family:var(--sans);font-size:.59rem;font-weight:500;
-  padding:.16rem .48rem;border:1px solid var(--bord);
-  border-radius:20px;color:var(--muted);background:var(--surf);
-}
+/* source chips hidden — replaced by section label */
+.srcrow{display:none}
+.schip{display:none}
 
-/* ════════════════════════════════════════
+/* ═══════════════════════════════
    FOOTER
-════════════════════════════════════════ */
+═══════════════════════════════ */
 .footer{
-  font-family:var(--sans);font-size:.64rem;color:var(--muted);
-  text-align:center;padding:1.75rem 0 1rem;
+  font-family:var(--sans);font-size:.62rem;color:var(--muted);
+  text-align:center;padding:1.6rem 0 1rem;
   border-top:1px solid var(--bord);margin-top:2rem;line-height:2.2;
 }
 .footer a{color:var(--it);cursor:pointer;text-decoration:none}
 .footer a:hover{text-decoration:underline}
 
-/* ════════════════════════════════════════
-   MODAL — mostra più contenuto
-════════════════════════════════════════ */
+/* ═══════════════════════════════
+   MODAL — drawer su mobile,
+   centered su desktop
+═══════════════════════════════ */
 .mov{
   display:none;position:fixed;inset:0;
   background:rgba(0,0,0,.52);z-index:200;
   align-items:flex-end;justify-content:center;
 }
-@media(min-width:640px){.mov{align-items:center;padding:2rem}}
+@media(min-width:640px){.mov{align-items:center;padding:1.5rem}}
 .mov.open{display:flex}
 
 .mbox{
   background:var(--surf);border-radius:14px 14px 0 0;width:100%;
   max-height:92vh;overflow-y:auto;
-  padding:1.5rem 1.4rem 3rem;
-  position:relative;border-top:3px solid var(--it);
-  animation:slideUp .3s cubic-bezier(.34,1.26,.64,1);
+  padding:1.4rem 1.3rem 3rem;position:relative;
+  border-top:3px solid var(--it);animation:slideUp .3s cubic-bezier(.34,1.26,.64,1);
 }
-.mbox.eu{border-top-color:var(--eu)}
+.mbox.eu {border-top-color:var(--eu)}
 .mbox.usa{border-top-color:var(--usa)}
-
 @media(min-width:640px){
   .mbox{
     max-width:660px;border-radius:var(--r);
-    padding:2rem 2.2rem 2.5rem;animation:fu .25s ease;
+    padding:1.8rem 2rem 2.3rem;animation:fu .25s ease;
   }
 }
 @keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
 
 .mcls{
-  position:absolute;top:1rem;right:1rem;
+  position:absolute;top:.9rem;right:.9rem;
   background:var(--bg2);border:1px solid var(--bord);border-radius:50%;
-  width:30px;height:30px;display:flex;align-items:center;justify-content:center;
-  font-size:.85rem;color:var(--muted);cursor:pointer;line-height:1;
-  font-family:var(--sans);
+  width:28px;height:28px;display:flex;align-items:center;justify-content:center;
+  font-size:.82rem;color:var(--muted);cursor:pointer;
+  font-family:var(--sans);transition:color .15s;
 }
 .mcls:hover{color:var(--txt)}
 
 .mtitle{
-  font-family:var(--serif);font-size:clamp(1.1rem,3.5vw,1.5rem);
-  font-weight:700;line-height:1.28;letter-spacing:-.02em;margin:.65rem 0 .6rem;
+  font-family:var(--serif);font-size:clamp(1.05rem,3.5vw,1.45rem);
+  font-weight:700;line-height:1.28;letter-spacing:-.02em;margin:.6rem 0 .55rem;
 }
 .mmeta{
-  font-family:var(--sans);font-size:.68rem;color:var(--muted);
-  margin-bottom:1rem;padding-bottom:1rem;border-bottom:1px solid var(--bord);
-  display:flex;gap:.7rem;flex-wrap:wrap;align-items:center;
+  font-family:var(--sans);font-size:.67rem;color:var(--muted);
+  margin-bottom:.95rem;padding-bottom:.95rem;border-bottom:1px solid var(--bord);
+  display:flex;gap:.6rem;flex-wrap:wrap;align-items:center;
 }
 .mmeta strong{color:var(--txt2)}
-
-/* Full article content area */
-.mfull{
-  font-family:var(--sans);font-size:.88rem;font-weight:300;
-  line-height:1.85;color:var(--txt2);
+.mfull{font-family:var(--sans);font-size:.86rem;font-weight:300;line-height:1.82;color:var(--txt2)}
+.mfull p{margin-bottom:.8rem}
+.mtrans-note{
+  margin-top:.6rem;font-size:.74rem;color:var(--muted);
+  padding:.6rem .8rem;background:var(--tb-bg);border-radius:var(--r-sm);
+  border-left:2px solid var(--bord2);line-height:1.6;
 }
-.mfull p{margin-bottom:.9rem}
-.mfull .loading-txt{
-  font-family:var(--sans);font-size:.78rem;color:var(--muted);
-  display:flex;align-items:center;gap:.5rem;padding:1rem 0;
-}
-
 .mlink{
   display:inline-flex;align-items:center;gap:.3rem;
-  margin-top:1.2rem;font-family:var(--sans);font-size:.73rem;font-weight:600;
+  margin-top:1.1rem;font-family:var(--sans);font-size:.71rem;font-weight:600;
   color:var(--it);text-decoration:none;
-  border:1px solid currentColor;padding:.4rem .85rem;border-radius:20px;
+  border:1px solid currentColor;padding:.38rem .82rem;border-radius:20px;
   transition:opacity .15s;
 }
 .mlink:hover{opacity:.8}
-.mlink.eu{color:var(--eu)}
+.mlink.eu {color:var(--eu)}
 .mlink.usa{color:var(--usa)}
 
-/* ════════════════════════════════════════
-   RESPONSIVE TWEAKS
-════════════════════════════════════════ */
-@media(max-width:600px){
-  main{padding:1.1rem .9rem}
+/* ═══════════════════════════════
+   RESPONSIVE
+═══════════════════════════════ */
+@media(max-width:580px){
+  main{padding:.9rem .9rem}
   .hw{padding:0 .9rem}
-  .hero{padding:1.1rem}
+  .hero{padding:1rem}
+  .shd{margin-top:1.6rem}
   #stxt,.sdot{display:none}
   .rl{display:none}
-  .rbtn{padding:.38rem .65rem}
+  .rbtn{padding:.36rem .6rem}
 }
 @media(max-width:360px){
-  .brand{font-size:.95rem}
-  .tab{font-size:.65rem;padding:.55rem .65rem .5rem}
+  .brand{font-size:.9rem}
+  .tab{font-size:.64rem;padding:.52rem .62rem .48rem}
 }
 </style>
 </head>
@@ -417,17 +401,14 @@ main{max-width:1200px;margin:0 auto;padding:1.75rem 1.25rem}
         <span class="sdot"></span>
         <span id="stxt">—</span>
 
-        <!-- Theme toggle con icone SVG minimal -->
-        <div class="tgl" role="group" aria-label="Tema colore">
-          <!-- Sun -->
+        <!-- Theme toggle SVG -->
+        <div class="tgl" role="group" aria-label="Tema">
           <button class="tb" data-t="light" onclick="setTheme('light')" title="Chiaro">
             <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="4.22" y1="4.22" x2="6.34" y2="6.34"/><line x1="17.66" y1="17.66" x2="19.78" y2="19.78"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/><line x1="4.22" y1="19.78" x2="6.34" y2="17.66"/><line x1="17.66" y1="6.34" x2="19.78" y2="4.22"/></svg>
           </button>
-          <!-- Half circle (auto) -->
           <button class="tb active" data-t="auto" onclick="setTheme('auto')" title="Auto">
             <svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 0 1 0 18V3z" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="9"/></svg>
           </button>
-          <!-- Moon -->
           <button class="tb" data-t="dark" onclick="setTheme('dark')" title="Scuro">
             <svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
           </button>
@@ -439,9 +420,14 @@ main{max-width:1200px;margin:0 auto;padding:1.75rem 1.25rem}
       </div>
     </div>
 
+    <!-- TABS WITH SVG ICONS -->
     <nav class="tabs" role="tablist">
-      <button class="tab active" data-cat="all" onclick="setTab(this)">Tutto</button>
-      <button class="tab" data-cat="it"  onclick="setTab(this)">Italia</button>
+      <!-- Globe (Tutto) -->
+      <button class="tab active" data-cat="all" onclick="setTab(this)">
+        <svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        Tutto
+      </button>
+        <button class="tab" data-cat="it"  onclick="setTab(this)">Italia</button>
       <button class="tab" data-cat="eu"  onclick="setTab(this)">Europa</button>
       <button class="tab" data-cat="usa" onclick="setTab(this)">USA</button>
     </nav>
@@ -454,18 +440,15 @@ main{max-width:1200px;margin:0 auto;padding:1.75rem 1.25rem}
     <div class="pb"><div class="pf"></div></div>
     <div class="lm" id="lmsg">Caricamento feed…</div>
   </div>
-
   <div id="error">
     <div class="etitle">Nessuna notizia caricata</div>
-    <div class="emsg" id="emsg">
+    <div class="emsg">
       Impossibile raggiungere i feed RSS. Se apri il file localmente (file://)
       il browser blocca le richieste di rete.<br><br>
-      <strong>Soluzione gratuita:</strong> trascina il file su <strong>netlify.com/drop</strong>
-      per avere un link https:// che funziona sempre.
+      <strong>Soluzione gratuita:</strong> trascina il file su <strong>netlify.com/drop</strong>.
     </div>
     <button class="btn-retry" onclick="loadAll()">↻ Riprova</button>
   </div>
-
   <div id="content"></div>
 </main>
 
@@ -477,22 +460,18 @@ main{max-width:1200px;margin:0 auto;padding:1.75rem 1.25rem}
     <div class="mtitle" id="mtitle"></div>
     <div class="mmeta"  id="mmeta"></div>
     <div class="mfull"  id="mfull"></div>
-    <a class="mlink" id="mlink" href="#" target="_blank" rel="noopener">
-      Leggi l'originale →
-    </a>
+    <a class="mlink" id="mlink" href="#" target="_blank" rel="noopener">Leggi l'originale →</a>
   </div>
 </div>
 
 <script>
-/* ═══════════════════════════════════════════════
+/* ═══════════════════════════════════════════
    FEED CONFIG
-   PER_SOURCE = 2 articoli per fonte → round-robin
-   garantisce 8+ notizie bilanciate per sezione.
-═══════════════════════════════════════════════ */
+═══════════════════════════════════════════ */
 const FEEDS = {
   it: [
-    { name:'ANSA',           url:'https://www.ansa.it/sito/notizie/politica/politica_rss.xml',        lang:'it' },
-    { name:'Corriere',       url:'https://xml2.corriereobjects.it/rss/politica.xml',                  lang:'it' },
+    { name:'ANSA',           url:'https://www.ansa.it/sito/notizie/politica/politica_rss.xml',       lang:'it' },
+    { name:'Corriere',       url:'https://www.corriere.it/dynamic-feed/rss/section/politica/',        lang:'it' },
     { name:'Repubblica',     url:'https://www.repubblica.it/rss/politica/rss2.0.xml',                 lang:'it' },
     { name:'Il Post',        url:'https://www.ilpost.it/politica/feed/',                              lang:'it' },
     { name:'Il Sole 24 Ore', url:'https://www.ilsole24ore.com/rss/politica--italia.xml',              lang:'it' },
@@ -510,287 +489,298 @@ const FEEDS = {
     { name:'Il Post Esteri',  url:'https://www.ilpost.it/esteri/feed/',                               lang:'it' },
     { name:'ANSA Europa',     url:'https://www.ansa.it/sito/notizie/mondo/europa/europa_rss.xml',     lang:'it' },
     { name:'Rep. Esteri',     url:'https://www.repubblica.it/rss/esteri/rss2.0.xml',                  lang:'it' },
-    { name:'Corriere Esteri', url:'https://xml2.corriereobjects.it/rss/esteri.xml',                   lang:'it' },
+    { name:'Corriere Esteri', url:'https://www.corriere.it/dynamic-feed/rss/section/esteri/',         lang:'it' },
     { name:'La Stampa Mondo', url:'https://www.lastampa.it/rss/esteri.xml',                           lang:'it' },
   ],
   usa: [
-    { name:'Politico',        url:'https://www.politico.com/rss/politics08.xml',                      lang:'en' },
-    { name:'NPR Politics',    url:'https://feeds.npr.org/1014/rss.xml',                               lang:'en' },
-    { name:'AP Politics',     url:'https://feeds.apnews.com/rss/apf-politics',                        lang:'en' },
-    { name:'The Hill',        url:'https://thehill.com/rss/syndicator/19109',                          lang:'en' },
-    { name:'Semafor',         url:'https://www.semafor.com/rss/politics.xml',                         lang:'en' },
-    { name:'NY Times Politics',url:'https://rss.nytimes.com/services/xml/rss/nyt/Politics.xml',       lang:'en' },
-    { name:'Il Post USA',     url:'https://www.ilpost.it/tag/stati-uniti/feed/',                      lang:'it' },
-    { name:'ANSA Americhe',   url:'https://www.ansa.it/sito/notizie/mondo/americhe/americhe_rss.xml', lang:'it' },
-    { name:'Corriere USA',    url:'https://xml2.corriereobjects.it/rss/esteri.xml',                   lang:'it' },
+    { name:'Politico',          url:'https://www.politico.com/rss/politics08.xml',                    lang:'en' },
+    { name:'NPR Politics',      url:'https://feeds.npr.org/1014/rss.xml',                             lang:'en' },
+    { name:'AP Politics',       url:'https://feeds.apnews.com/rss/apf-politics',                      lang:'en' },
+    { name:'The Hill',          url:'https://thehill.com/rss/syndicator/19109',                        lang:'en' },
+    { name:'Semafor',           url:'https://www.semafor.com/rss/politics.xml',                       lang:'en' },
+    { name:'NY Times Politics', url:'https://rss.nytimes.com/services/xml/rss/nyt/Politics.xml',      lang:'en' },
+    { name:'Il Post USA',       url:'https://www.ilpost.it/tag/stati-uniti/feed/',                    lang:'it' },
+    { name:'ANSA Americhe',     url:'https://www.ansa.it/sito/notizie/mondo/americhe/americhe_rss.xml',lang:'it'},
+    { name:'Corriere USA',      url:'https://www.corriere.it/dynamic-feed/rss/section/esteri/',        lang:'it' },
   ]
 };
 
-const PER_SOURCE = 2;   // articoli per fonte → round-robin dà ~8 bilanciate
-const GRID_MAX   = 8;   // notizie nella griglia (escluso hero)
-const PROXY      = 'https://api.rss2json.com/v1/api.json?rss_url=';
-const CACHE_KEY  = 'mp_v2';
+const PER_SOURCE = 3;
+const HOME_GRID  = 8;
+const SEC_GRID   = 24;
+const CACHE_KEY  = 'mp_v6';
 const CACHE_TTL  = 15 * 60 * 1000;
 
+/* ── 3 proxy in cascata — il primo che risponde vince ──
+   Questo risolve i blocchi CORS su file:// e i fallimenti di singoli proxy */
+const PROXIES = [
+  url => `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(url)}`,
+  url => `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`,
+  url => `https://corsproxy.io/?${encodeURIComponent(url)}`,
+];
+
+/* Traduzione MyMemory */
 const tCache = {};
-
-/* ── Traduzione (MyMemory, gratuita, no key) ── */
-async function tr(text, lang) {
-  if (lang !== 'en' || !text) return { t: text, done: false };
-  const k = text.slice(0, 80);
-  if (tCache[k]) return tCache[k];
-  try {
-    const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text.slice(0,450))}&langpair=en|it`;
-    const r   = await fetch(url);
-    const d   = await r.json();
-    if (d.responseStatus === 200) {
-      const res = { t: d.responseData.translatedText, done: true };
-      tCache[k] = res; return res;
-    }
-  } catch {}
-  return { t: text, done: false };
-}
-
-let news    = { it:[], eu:[], usa:[], ts:0 };
-let curTab  = 'all';
-
-/* ── THEME ── */
-function initTheme() {
-  applyTheme(localStorage.getItem('mp_theme') || 'auto');
-}
-function setTheme(t) { applyTheme(t); localStorage.setItem('mp_theme', t); }
-function applyTheme(t) {
-  document.documentElement.setAttribute('data-theme', t);
-  document.querySelectorAll('.tb').forEach(b => b.classList.toggle('active', b.dataset.t === t));
-}
-
-/* ── INIT ── */
-window.onload = () => {
-  initTheme();
-  const c = getCache();
-  if (c) { news = c; render(); } else loadAll();
-};
-
-/* ── FETCH SINGOLO FEED ── */
-async function fetchFeed(feed, cat) {
-  try {
-    const r = await fetch(PROXY + encodeURIComponent(feed.url));
-    if (!r.ok) return [];
+async function translateToIt(text, lang){
+  if(!text || lang==='it') return {t:text, done:false};
+  const key = lang+'|'+text.slice(0,80);
+  if(tCache[key]) return tCache[key];
+  try{
+    const r = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text.slice(0,480))}&langpair=${lang}|it`);
     const d = await r.json();
-    if (d.status !== 'ok' || !d.items?.length) return [];
-    const slice = d.items.slice(0, PER_SOURCE);
-    const out   = [];
-    for (const item of slice) {
-      const rawT = clean(item.title || '');
-      const rawS = clean(item.description || item.content || '').slice(0, 350);
-      let title   = rawT, summary = rawS + '…', translated = false;
-      if (feed.lang === 'en') {
-        const [rt, rs] = await Promise.all([tr(rawT, 'en'), tr(rawS, 'en')]);
-        title = rt.t; summary = rs.t.trimEnd() + '…'; translated = rt.done;
+    if(d.responseStatus===200 && d.responseData.translatedText){
+      const res={t:d.responseData.translatedText, done:true};
+      tCache[key]=res; return res;
+    }
+  }catch{}
+  return {t:text, done:false};
+}
+
+let news   = {it:[], eu:[], usa:[], ts:0};
+let curTab = 'all';
+
+function initTheme(){ applyTheme(localStorage.getItem('mp_theme')||'auto') }
+function setTheme(t){ applyTheme(t); localStorage.setItem('mp_theme',t) }
+function applyTheme(t){
+  document.documentElement.setAttribute('data-theme',t);
+  document.querySelectorAll('.tb').forEach(b=>b.classList.toggle('active',b.dataset.t===t));
+}
+
+window.onload=()=>{ initTheme(); const c=getCache(); if(c){news=c;render()}else loadAll(); };
+
+/* ── Fetch con proxy fallback ── */
+async function fetchWithProxy(feedUrl){
+  for(const makeUrl of PROXIES){
+    try{
+      const r = await fetch(makeUrl(feedUrl), {signal: AbortSignal.timeout(6000)});
+      if(!r.ok) continue;
+      const text = await r.text();
+      /* rss2json restituisce JSON direttamente */
+      if(text.trim().startsWith('{')){
+        const d = JSON.parse(text);
+        /* allorigins wrappa in {contents:'...'} */
+        if(d.contents) return parseRSS(d.contents);
+        if(d.items)    return d.items;
+        if(d.status==='ok') return d.items||[];
       }
-      out.push({ cat, source:feed.name, lang:feed.lang, title, summary,
-        link:item.link||'#', pubDate:item.pubDate||'', time:timeAgo(item.pubDate), translated });
+      /* corsproxy restituisce XML grezzo */
+      return parseRSS(text);
+    }catch{ continue }
+  }
+  return [];
+}
+
+/* Parser XML grezzo per i proxy che restituiscono XML */
+function parseRSS(xml){
+  try{
+    const doc = new DOMParser().parseFromString(xml,'text/xml');
+    const items = [...doc.querySelectorAll('item')];
+    return items.map(it=>({
+      title:       it.querySelector('title')?.textContent||'',
+      description: it.querySelector('description')?.textContent||
+                   it.querySelector('encoded')?.textContent||'',
+      link:        it.querySelector('link')?.textContent||
+                   it.querySelector('guid')?.textContent||'#',
+      pubDate:     it.querySelector('pubDate')?.textContent||'',
+    }));
+  }catch{ return [] }
+}
+
+async function fetchFeed(feed, cat){
+  try{
+    const items = await fetchWithProxy(feed.url);
+    if(!items.length) return [];
+    const slice = items.slice(0, PER_SOURCE);
+    const out   = [];
+    for(const item of slice){
+      const rawT = clean(item.title||'');
+      const rawS = clean(item.description||item.content||'').slice(0,350);
+      let title=rawT, summary=rawS+'…', translated=false;
+      if(feed.lang!=='it'){
+        const[rt,rs]=await Promise.all([translateToIt(rawT,feed.lang),translateToIt(rawS,feed.lang)]);
+        title=rt.t; summary=rs.t.trimEnd()+'…'; translated=rt.done;
+      }
+      out.push({cat, source:feed.name, lang:feed.lang,
+        title, summary, link:item.link||'#',
+        pubDate:item.pubDate||'', time:timeAgo(item.pubDate), translated});
     }
     return out;
-  } catch { return []; }
+  }catch{ return [] }
 }
 
-/* ── LOAD ALL ── */
-async function loadAll() {
+async function loadAll(){
   showS('loading');
-  const btn = document.getElementById('rbtn');
-  btn.disabled = true; btn.classList.add('loading');
-  const labels = { it:'Italia', eu:'Europa', usa:'USA' };
-  const groups = { it:[], eu:[], usa:[] };
+  const btn=document.getElementById('rbtn');
+  btn.disabled=true; btn.classList.add('loading');
+  const labels={it:'Italia',eu:'Europa',usa:'USA'};
+  const groups={it:[],eu:[],usa:[]};
 
-  for (const [cat, feeds] of Object.entries(FEEDS)) {
+  for(const[cat,feeds] of Object.entries(FEEDS)){
     setLMsg(`Carico ${labels[cat]}…`);
-    const settled = await Promise.allSettled(feeds.map(f => fetchFeed(f, cat)));
-    const perSrc  = settled.map(r => r.status === 'fulfilled' ? r.value : []);
-    groups[cat] = roundRobin(perSrc);
+    const settled = await Promise.allSettled(feeds.map(f=>fetchFeed(f,cat)));
+    const perSrc  = settled.map(r=>r.status==='fulfilled'?r.value:[]);
+    groups[cat]   = roundRobin(perSrc);
   }
 
-  const tot = Object.values(groups).reduce((s,a)=>s+a.length,0);
-  if (!tot) { showS('error'); btn.disabled=false; btn.classList.remove('loading'); return; }
-
-  news = { ...groups, ts: Date.now() };
+  const tot=Object.values(groups).reduce((s,a)=>s+a.length,0);
+  if(!tot){ showS('error'); btn.disabled=false; btn.classList.remove('loading'); return; }
+  news={...groups, ts:Date.now()};
   setCache(news); render();
 }
 
-/* Round-robin: 1 articolo per fonte a turno → distribuzione uniforme */
-function roundRobin(arrays) {
-  const res  = [], seen = new Set();
-  const qs   = arrays.map(a => [...a]);
-  let   more = true;
-  while (more) {
-    more = false;
-    for (const q of qs) {
-      while (q.length) {
-        const item = q.shift();
-        const key  = item.title.slice(0,55).toLowerCase();
-        if (!seen.has(key)) { seen.add(key); res.push(item); more = true; break; }
+/* Round-robin garantisce una notizia per fonte a turno */
+function roundRobin(arrays){
+  const res=[],seen=new Set();
+  const qs=arrays.map(a=>[...a]);
+  let more=true;
+  while(more){
+    more=false;
+    for(const q of qs){
+      while(q.length){
+        const item=q.shift();
+        const key=item.title.slice(0,55).toLowerCase();
+        if(!seen.has(key)){seen.add(key);res.push(item);more=true;break}
       }
     }
   }
   return res;
 }
 
-function refresh() { localStorage.removeItem(CACHE_KEY); loadAll(); }
+function refresh(){ localStorage.removeItem(CACHE_KEY); loadAll(); }
 
 /* ── RENDER ── */
-function render() {
+function render(){
   showS('content');
-  const btn = document.getElementById('rbtn');
-  btn.disabled = false; btn.classList.remove('loading');
-  const ago = Math.round((Date.now()-news.ts)/60000);
-  document.getElementById('stxt').textContent = ago < 1 ? 'adesso' : `${ago}m fa`;
+  const btn=document.getElementById('rbtn');
+  btn.disabled=false; btn.classList.remove('loading');
+  const ago=Math.round((Date.now()-news.ts)/60000);
+  document.getElementById('stxt').textContent=ago<1?'adesso':`${ago}m fa`;
 
-  const sIt  = curTab==='all'||curTab==='it';
-  const sEU  = curTab==='all'||curTab==='eu';
-  const sUSA = curTab==='all'||curTab==='usa';
+  const isAll=curTab==='all';
+  const gridMax=isAll?HOME_GRID:SEC_GRID;
 
-  let html = '';
-  if (sIt  && news.it.length)  html += buildSec(news.it,  'it',  'IT',  'Italia',       FEEDS.it);
-  if (sEU  && news.eu.length)  html += buildSec(news.eu,  'eu',  'EU',  'Europa',        FEEDS.eu);
-  if (sUSA && news.usa.length) html += buildSec(news.usa, 'usa', 'USA', 'Stati Uniti',   FEEDS.usa);
+  let html='';
+  if((isAll||curTab==='it')  && news.it.length)  html+=buildSec(news.it, 'it', 'Italia',       gridMax);
+  if((isAll||curTab==='eu')  && news.eu.length)  html+=buildSec(news.eu, 'eu', 'Europa',        gridMax);
+  if((isAll||curTab==='usa') && news.usa.length) html+=buildSec(news.usa,'usa','Stati Uniti',   gridMax);
 
-  const d   = new Date(news.ts);
-  const all = [...new Set([...FEEDS.it,...FEEDS.eu,...FEEDS.usa].map(f=>f.name))];
-  html += `<div class="footer">
+  const d=new Date(news.ts);
+  const allSrcs=[...new Set([...FEEDS.it,...FEEDS.eu,...FEEDS.usa].map(f=>f.name))];
+  html+=`<div class="footer">
     Aggiornato alle <strong>${d.toLocaleTimeString('it-IT',{hour:'2-digit',minute:'2-digit'})}</strong>
     · Cache 15 min · <a onclick="refresh()">Forza aggiornamento</a><br>
-    Fonti: ${all.join(' · ')}
+    Fonti: ${allSrcs.join(' · ')}
   </div>`;
-  document.getElementById('content').innerHTML = html;
+  document.getElementById('content').innerHTML=html;
 }
 
-function buildSec(items, cat, ico, label, feedList) {
+function buildSec(items, cat, label, gridMax){
   const hero = items[0];
-  const grid = items.slice(1, GRID_MAX + 1);          // esattamente 8
-  const srcs = [...new Set(items.map(i=>i.source))];
+  /* Prendi esattamente HOME_GRID card — se non ci sono abbastanza notizie
+     non generare celle vuote: usa solo quelle disponibili */
+  const grid = items.slice(1, gridMax+1);
 
-  let h = `<div class="shd ${cat}">
-    <span class="sico ${cat}">${ico}</span>
-    <span class="stitle">${label}</span>
-    <span class="sline"></span>
-    <span class="scnt">${grid.length+1} notizie · ${srcs.length} fonti</span>
+  let h=`<div class="shd ${cat}">
+    <span class="shd-label"><span class="stitle">${label}</span></span>
+    <span class="shd-line"></span>
   </div>
   ${heroTpl(hero)}`;
 
-  if (grid.length) {
-    h += `<div class="grid">`;
-    grid.forEach((n,i) => h += cardTpl(n,i));
-    h += `</div>`;
+  if(grid.length){
+    /* Numero colonne dinamico: 4 se >= 4 card, altrimenti quante ce ne sono */
+    const cols = Math.min(grid.length, 4);
+    h+=`<div class="grid" style="grid-template-columns:repeat(${cols},1fr)">`;
+    grid.forEach((n,i)=>h+=cardTpl(n,i));
+    h+=`</div>`;
   }
-  h += `<div class="srcrow">${srcs.map(s=>`<span class="schip">${s}</span>`).join('')}</div>`;
   return h;
 }
 
 /* ── TEMPLATES ── */
-function tb(n) { return n.translated ? `<span class="tbadge">trad.</span>` : ''; }
+function tbadge(n){ return n.translated?`<span class="tbadge">trad.</span>`:''; }
 
-function heroTpl(n) {
-  return `<div class="hero ${n.cat}" onclick="openM(${escData(n)})">
-    <span class="sbadge ${n.cat}">${n.source}</span>${tb(n)}
+function heroTpl(n){
+  const e=enc(n);
+  return `<div class="hero ${n.cat}" onclick="openM('${e}')">
+    <span class="sbadge ${n.cat}">${n.source}</span>${tbadge(n)}
     <div class="hero-title">${n.title}</div>
     <div class="hero-sum">${n.summary}</div>
-    <div class="hero-foot"><span class="src">${n.source}</span><span class="sep">·</span><span>${n.time}</span></div>
+    <div class="cfoot"><span class="src">${n.source}</span><span class="sep">·</span><span>${n.time}</span></div>
   </div>`;
 }
-function cardTpl(n, i) {
-  return `<div class="ncard ${n.cat}" style="animation-delay:${i*.04}s" onclick="openM(${escData(n)})">
-    <span class="sbadge ${n.cat}">${n.source}</span>${tb(n)}
+function cardTpl(n,i){
+  const e=enc(n);
+  return `<div class="ncard ${n.cat}" style="animation-delay:${i*.04}s" onclick="openM('${e}')">
+    <span class="sbadge ${n.cat}">${n.source}</span>${tbadge(n)}
     <div class="ct">${n.title}</div>
     <div class="ce">${n.summary}</div>
     <div class="cmeta"><span class="src">${n.source}</span><span class="sep">·</span><span>${n.time}</span></div>
   </div>`;
 }
 
-/* ── MODAL ──
-   Al click tentiamo di caricare il corpo
-   completo dell'articolo via rss2json (ha content
-   più lungo di description). Se non disponibile,
-   mostriamo il sommario esteso + link. */
-function escData(n) {
-  return `'${btoa(unescape(encodeURIComponent(JSON.stringify(n))))}'`;
-}
-
-async function openM(encoded) {
-  const n = JSON.parse(decodeURIComponent(escape(atob(encoded))));
-  document.getElementById('mbox').className = `mbox ${n.cat}`;
-  document.getElementById('mtag').innerHTML  = `<span class="sbadge ${n.cat}">${n.source}</span>${n.translated ? `<span class="tbadge">tradotto dall'inglese</span>` : ''}`;
-  document.getElementById('mtitle').textContent = n.title;
-  document.getElementById('mmeta').innerHTML = `<strong>${n.source}</strong><span class="sep">·</span>${n.time}`;
-  document.getElementById('mlink').href = n.link;
-  document.getElementById('mlink').className = `mlink ${n.cat}`;
-
-  // Mostra subito il sommario
-  const fEl = document.getElementById('mfull');
-  fEl.innerHTML = `<p>${n.summary}</p><div class="loading-txt"><span>⟳</span> Carico articolo completo…</div>`;
+/* ── MODAL ── */
+function openM(encoded){
+  const n=JSON.parse(decodeURIComponent(escape(atob(encoded))));
+  document.getElementById('mbox').className=`mbox ${n.cat}`;
+  document.getElementById('mtag').innerHTML=`<span class="sbadge ${n.cat}">${n.source}</span>${n.translated?`<span class="tbadge">tradotto</span>`:''}`;
+  document.getElementById('mtitle').textContent=n.title;
+  document.getElementById('mmeta').innerHTML=`<strong>${n.source}</strong><span class="sep">·</span>${n.time}`;
+  document.getElementById('mlink').href=n.link;
+  document.getElementById('mlink').className=`mlink ${n.cat}`;
+  const note=n.translated?`<div class="mtrans-note">ℹ Tradotto automaticamente dal ${langLabel(n.lang)}.</div>`:'';
+  document.getElementById('mfull').innerHTML=`<p>${n.summary}</p>${note}`;
   document.getElementById('modal').classList.add('open');
-  document.body.style.overflow = 'hidden';
-
-  // Prova a caricare contenuto completo
-  try {
-    const url = PROXY + encodeURIComponent(n.link) + '&count=1';
-    // Usiamo rss2json su un feed virtuale — non funziona sempre.
-    // Fallback: mostriamo il sommario + invito a leggere l'originale.
-    // Per ora mostriamo un sommario più lungo già disponibile.
-    setTimeout(() => {
-      fEl.innerHTML = `
-        <p>${n.summary}</p>
-        <p style="color:var(--muted);font-size:.78rem;margin-top:.5rem">
-          Il testo completo dell'articolo è disponibile sul sito della fonte originale.
-          ${n.translated ? 'Il titolo e l\'anteprima sono stati tradotti automaticamente dall\'inglese.' : ''}
-        </p>`;
-    }, 800);
-  } catch {
-    fEl.innerHTML = `<p>${n.summary}</p>`;
-  }
+  document.body.style.overflow='hidden';
 }
-
-function closeM() {
+function closeM(){
   document.getElementById('modal').classList.remove('open');
-  document.body.style.overflow = '';
+  document.body.style.overflow='';
 }
-document.addEventListener('keydown', e => { if(e.key==='Escape') closeM(); });
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeM();});
+function langLabel(l){
+  return {en:'inglese',de:'tedesco',fr:'francese',es:'spagnolo',pt:'portoghese',nl:'olandese',pl:'polacco'}[l]||l;
+}
 
 /* ── TABS ── */
-function setTab(btn) {
+function setTab(btn){
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  btn.classList.add('active'); curTab = btn.dataset.cat;
-  if (news.ts) render();
+  btn.classList.add('active'); curTab=btn.dataset.cat;
+  if(news.ts) render();
 }
 
 /* ── STATE ── */
-function showS(s) {
-  document.getElementById('loading').style.display = s==='loading'?'flex':'none';
-  document.getElementById('error').style.display   = s==='error'?'flex':'none';
-  document.getElementById('content').style.display = s==='content'?'block':'none';
+function showS(s){
+  document.getElementById('loading').style.display=s==='loading'?'flex':'none';
+  document.getElementById('error').style.display  =s==='error'  ?'flex':'none';
+  document.getElementById('content').style.display=s==='content'?'block':'none';
 }
-function setLMsg(t) { document.getElementById('lmsg').textContent = t; }
+function setLMsg(t){document.getElementById('lmsg').textContent=t;}
 
 /* ── UTILS ── */
-function clean(s) {
+function clean(s){
   return s.replace(/<[^>]*>/g,'')
     .replace(/&nbsp;/g,' ').replace(/&amp;/g,'&').replace(/&lt;/g,'<')
     .replace(/&gt;/g,'>').replace(/&quot;/g,'"').replace(/&#39;/g,"'")
     .replace(/\[&#8230;\]/g,'…').replace(/\s+/g,' ').trim();
 }
-function timeAgo(ds) {
-  if (!ds) return '—';
-  const d = (Date.now()-new Date(ds))/1000;
-  if (d<60)    return 'adesso';
-  if (d<3600)  return `${Math.round(d/60)}m fa`;
-  if (d<86400) return `${Math.round(d/3600)}h fa`;
-  return `${Math.round(d/86400)}g fa`;
+function timeAgo(ds){
+  if(!ds)return'—';
+  const d=(Date.now()-new Date(ds))/1000;
+  if(d<60)   return'adesso';
+  if(d<3600) return`${Math.round(d/60)}m fa`;
+  if(d<86400)return`${Math.round(d/3600)}h fa`;
+  return`${Math.round(d/86400)}g fa`;
 }
-function setCache(d) { try { localStorage.setItem(CACHE_KEY, JSON.stringify(d)); } catch {} }
-function getCache() {
-  try {
-    const d = JSON.parse(localStorage.getItem(CACHE_KEY));
-    return (!d || Date.now()-d.ts>CACHE_TTL) ? null : d;
-  } catch { return null; }
+function enc(obj){
+  try{return btoa(unescape(encodeURIComponent(JSON.stringify(obj))));}
+  catch{return btoa(JSON.stringify(obj));}
+}
+function setCache(d){try{localStorage.setItem(CACHE_KEY,JSON.stringify(d));}catch{}}
+function getCache(){
+  try{
+    const d=JSON.parse(localStorage.getItem(CACHE_KEY));
+    return(!d||Date.now()-d.ts>CACHE_TTL)?null:d;
+  }catch{return null;}
 }
 </script>
 </body>
