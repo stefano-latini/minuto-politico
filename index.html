@@ -52,21 +52,26 @@
    RESET
 ═══════════════════════════════ */
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-html{-webkit-text-size-adjust:100%;overflow-x:clip;width:100%}
-/* Wrapper principale — blocca qualsiasi overflow orizzontale */
-#page-wrap{
+html{
+  -webkit-text-size-adjust:100%;
+  overflow-x:hidden;
   width:100%;
   max-width:100%;
-  overflow-x:hidden;
-  overflow-x:clip;
-  position:relative;
 }
 body{
   background:var(--bg);color:var(--txt);
   font-family:var(--serif);line-height:1.6;min-height:100vh;
   transition:background .25s,color .25s;
-  overflow-x:clip;
+  overflow-x:hidden;
   width:100%;
+  max-width:100%;
+  position:relative;
+}
+/* Wrapper principale */
+#page-wrap{
+  width:100%;
+  max-width:100%;
+  overflow:hidden;
   position:relative;
 }
 
@@ -77,9 +82,10 @@ header{
   background:var(--hbg);border-bottom:1px solid var(--bord);
   position:sticky;top:0;z-index:100;
   backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
-  width:100%;overflow:hidden;
+  width:100%;max-width:100%;overflow:hidden;
+  left:0;right:0;
 }
-.hw{max-width:1200px;margin:0 auto;padding:0 1.25rem;overflow:hidden}
+.hw{max-width:1200px;margin:0 auto;padding:0 1.25rem;overflow:hidden;box-sizing:border-box}
 
 .h-top{
   display:flex;align-items:center;justify-content:space-between;
@@ -152,7 +158,7 @@ header{
 /* ═══════════════════════════════
    MAIN
 ═══════════════════════════════ */
-main{max-width:1200px;margin:0 auto;padding:1.2rem 1.25rem;overflow-x:clip}
+main{max-width:1200px;margin:0 auto;padding:1.2rem 1.25rem;overflow-x:hidden}
 
 /* Loading */
 #loading{
@@ -168,7 +174,7 @@ main{max-width:1200px;margin:0 auto;padding:1.2rem 1.25rem;overflow-x:clip}
 @keyframes lp{0%,100%{opacity:.2}50%{opacity:.7}}
 .pb{width:130px;height:2px;background:var(--bord);overflow:hidden;border-radius:2px}
 .pf{height:100%;background:var(--it);animation:pfx 1.4s ease infinite}
-@keyframes pfx{0%{width:0;transform:translateX(0)}50%{width:55%}100%{width:100%;transform:translateX(110%)}}
+@keyframes pfx{0%{width:0;opacity:1}80%{width:100%;opacity:1}100%{width:100%;opacity:0}}
 .lm{font-family:var(--sans);font-size:.73rem;color:var(--muted)}
 
 /* Error */
@@ -266,7 +272,7 @@ main{max-width:1200px;margin:0 auto;padding:1.2rem 1.25rem;overflow-x:clip}
 }
 .cfoot .src{color:var(--txt2);font-weight:600}
 .sep{color:var(--bord2)}
-@keyframes fu{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fu{from{opacity:0}to{opacity:1}}
 
 /* ═══════════════════════════════
    BLOCK GRID
